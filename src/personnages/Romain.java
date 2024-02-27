@@ -3,12 +3,11 @@ package personnages;
 public class Romain {
 	private String nom;
 	private int force;
-	private boolean vivant;
+	private boolean vivant = true;
 
 	public Romain(String nom, int force) {
 		this.nom = nom;
 		this.force = force;
-		this.vivant = true;
 	}
 
 	public String getNom() {
@@ -29,11 +28,14 @@ public class Romain {
 
 	public void recevoirCoup(int forceCoup) {
 		force -= forceCoup;
-		if (force > 0) {
-			parler("Aïe");
-		} else if (vivant) {
-			parler("J'abandonne...");
+		if (force <= 0) {
 			vivant = false;
+		}
+		
+		if (vivant) {
+			parler("Aïe");
+		} else {
+			parler("J'abandonne...");
 		}
 	}
 }
