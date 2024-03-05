@@ -1,7 +1,5 @@
 package personnages;
 
-import com.apple.eawt.ApplicationBeanInfo;
-
 public class Village {  
     private String nom;
     private Chef chef;

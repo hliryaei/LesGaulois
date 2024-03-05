@@ -4,7 +4,9 @@ public class Gaulois {
 
 	private String nom;
 	private int force;
+	private int nbTrophees = 0;
 	private int effetPotion = 1;
+	private Equipement[] trophees = new Equipement[100];
 
 	public Gaulois(String nom, int force) {
 		this.nom = nom;
@@ -20,17 +22,28 @@ public class Gaulois {
 		System.out.println(prendreParole() + "« " + texte + "»");
 	}
 
-	private String prendreParole() {
+	/*private String prendreParole() {
 		return "Le gaulois " + nom + " : ";
+	}*/
+	private String prendreParole() {
+        return "Le gaulois " + nom + " : ";
 	}
-
-	public void frapper(Romain romain) {
+	/*public void frapper(Romain romain) {
 		if (romain.getVivant()) {
 			System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
 			romain.recevoirCoup((force / 3) * effetPotion);
 		}
-	}
+	}*/
 
+	
+	public void frapper(Romain romain) {
+		System.out.println(nom + " envoie un grand coup dans la mâchoire de " + romain.getNom());
+		Equipement[] nouveauxTrophees = romain.recevoirCoup((force / 3) * effetPotion);
+		for (int i = 0; nouveauxTrophees != null && i < nouveauxTrophees.length; i++, nbTrophees++) {
+		               this.trophees[nbTrophees] = nouveauxTrophees[i];
+		} 
+	}
+	
 	@Override
 	public String toString() {
 		return "Gaulois [nom=" + nom + ", force=" + force + ", effetPotion=" + effetPotion + "]";
@@ -57,5 +70,19 @@ public class Gaulois {
 	 * 
 	 * asterix.frapper(cesar); }
 	 */
+	public void faireUneDonnation(Musee musee) {
+        if (nbTrophees > 0) { 
+            System.out.print("Le gaulois " + nom + " : « Je donne au musee tous mes trophees : ");
+            for (int i = 0; i < nbTrophees; i++) {
+                if (trophees[i] != null) { 
+                    System.out.print(trophees[i] + " "); 
+                    musee.donnerTrophees(this, trophees[i]); 
+                    trophees[i] = null; 
+                }
+            nbTrophees = 0; 
+            System.out.println("»");
+            }
+        }
 
+	}
 }
